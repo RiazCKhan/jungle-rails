@@ -23,7 +23,7 @@ RSpec.describe Product, type: :model do
       @category = Category.new(:name => "execution")
       @category.save!
 
-      @product = Product.new(:name => nil, :price => 999999, :quantity => 1, :category_id => @category.id)
+      @product = Product.new(:price => 999999, :quantity => 1, :category_id => @category.id)
       @product.save
       expect(@product.errors.full_messages).to match_array(["Name can't be blank"])
     end
@@ -35,6 +35,24 @@ RSpec.describe Product, type: :model do
       @product = Product.new(:name => "electric chair", :quantity => 1, :category_id => @category.id)
       @product.save
       expect(@product.errors.full_messages).to match_array(["Price cents is not a number", "Price is not a number", "Price can't be blank"])
+    end
+
+    it "absence of quantity" do
+      @category = Category.new(:name => "execution")
+      @category.save!
+
+      @product = Product.new(:name => "electric chair", :price => 999999, :category_id => @category.id)
+      @product.save
+      expect(@product.errors.full_messages).to match_array(["Quantity can't be blank"])
+    end
+
+    it "absence of product category" do
+      @category = Category.new(:name => "execution")
+      @category.save!
+
+      @product = Product.new(:name => "electric chair", :price => 999999, :quantity => 1)
+      @product.save
+      expect(@product.errors.full_messages).to match_array(["Category can't be blank"])
     end
 
   end
