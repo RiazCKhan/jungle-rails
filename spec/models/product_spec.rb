@@ -8,20 +8,21 @@ require 'rails_helper'
 RSpec.describe Product, type: :model do
   describe 'Validations' do
 
-    before do
+    
+    it "new product saved" do
       @category = Category.new(:name => "execution")
-      @product = Product.new(:name => "electric chair", :price => 999999, :quantity => 1, :category_id => 1)
-    end
-
-    it 'should save a new product' do
       @category.save!
+
+      @product = Product.new(:name => "electric chair", :price => 999999, :quantity => 1, :category_id => @category.id)
       @product.save!
-      expect(@product.id).to be_present
+
+      expect(@product).to be_present
     end
 
-    it "presence of product name" do
-      expect(@product.name).to be_present
-    end
+
+
+
+
 
   end
 end
