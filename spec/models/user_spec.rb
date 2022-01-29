@@ -8,19 +8,36 @@ RSpec.describe User, type: :model do
   describe 'User Valiations' do
 
     before do
-      @user = User.new(:first_name => 'Jim', :last_name => 'Test', :email => 'jt@mail.com', :password_digest => '123')
+      @user = User.new(:first_name => 'Jim',
+         :last_name => 'Test', 
+         :email => 'jt@mail.com', 
+         :password_digest => '123')
       @user.save
     end
 
-    it "confirms first name"
+    it "confirms first name" do
+      expect(@user.first_name).to eq('Jim')
+    end
 
+    it "confirms last name" do
+      expect(@user.last_name).to eq('Test')
+    end
 
+    it "confirms email" do
+      expect(@user.email).to match('jt@mail.com')
+    end
 
-    it "confirms last name"
+    it "confirm email case sensitive match" do
+      expect(@user.email).not_to match('JT@mail.com')
+    end
 
-    it "confirms email"
+    it "confirms password" do
+      expect(@user.password_digest).to eq('123')
+    end
 
-    it "confirms password"
+    it "confirms inccorect password" do
+      expect(@user.password_digest).not_to eq('456')
+    end
 
   end
 end
