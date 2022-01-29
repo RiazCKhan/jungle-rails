@@ -19,12 +19,24 @@ RSpec.describe User, type: :model do
       expect(@user.first_name).to eq('Jim')
     end
 
+    it "user first name must not be empty" do
+      expect(@user.first_name).not_to be_empty
+    end
+
     it "confirms last name" do
       expect(@user.last_name).to eq('Test')
     end
 
+    it "user last name must not be empty" do
+      expect(@user.last_name).not_to be_empty
+    end
+
     it "confirms email" do
       expect(@user.email).to match('jt@mail.com')
+    end
+
+    it "user email must not be empty" do
+      expect(@user.email).not_to be_empty
     end
 
     it "confirm email case sensitive match" do
@@ -37,6 +49,10 @@ RSpec.describe User, type: :model do
 
     it "confirms inccorect password" do
       expect(@user.password_digest).not_to eq('456')
+    end
+
+    it "password must have a minimum length of 3 chars" do
+       should { ensure_length_of(@user.password_digest).is_at_least(3) }
     end
 
   end
