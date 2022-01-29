@@ -54,6 +54,10 @@ RSpec.describe User, type: :model do
     it "password must have a minimum length of 3 chars" do
        should { ensure_length_of(@user.password_digest).is_at_least(3) }
     end
-
   end
+
+  describe '.authenticate_with_credentials' do
+    
+  end
+    
 end
